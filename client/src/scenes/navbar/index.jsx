@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../state";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import SearchField from "../../UI/SearchField";
@@ -16,13 +16,29 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/";
   const isMobileScreen = useMediaQuery("(max-width: 768px)");
 
-  const fullName = `${user?.firstName} ${user?.lasName}`;
+  const fullName = `${user?.firstName} ${user?.lastName}`;
 
   const options = [
-    { id: 1, title: "Log Out", action: () => dispatch(setLogout) },
+    { id: 1, title: "Log Out", action: () => dispatch(setLogout()) },
   ];
+
+  if (isLoginPage) {
+    return (
+      <div className="bg-white dark:bg-[#1A1A1A]">
+        <div className="container mx-auto flex justify-center items-center p-4">
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-2xl text-sky-500 dark:text-sky-300 mr-6 cursor-pointer">
+              SocialMedia
+            </h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white dark:bg-[#1A1A1A]">
