@@ -28,16 +28,19 @@ const InputField = ({
       <label
         htmlFor={name}
         className={`absolute text-sm left-2 px-[2px] transition-all ease-linear dark:text-white ${
-          isInputActive ? " -translate-y-[14px] bg-white dark:text-white dark:bg-[#1A1A1A]" : "translate-y-[6px]"
+          isInputActive
+            ? "-translate-y-[14px] bg-white dark:text-white dark:bg-[#1A1A1A]"
+            : "translate-y-[6px]"
         } ${error && "text-red-600"}`}
       >
         {label}
       </label>
       <input
+        className="w-full py-1 focus:outline-none dark:bg-transparent dark:text-white"
         ref={inputRef}
         id={name}
-        className="w-full py-1 focus:outline-none dark:bg-transparent dark:text-white"
-        onChange={(e) => onChange(e)}
+        value={value}
+        onChange={onChange}
         onBlur={(e) => blurInput(e)}
         onFocus={() => setIsInputActive(true)}
       />
