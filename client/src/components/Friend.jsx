@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setFriends } from "../state";
 import UserImage from "./UserImage";
 import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
+import IconButton from "../UI/buttons/IconButton";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     try {
       const result = await axios.patch(
         `http://localhost:3001/users/${_id}/${friendId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,9 +50,13 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
       </div>
       <button onClick={() => patchFriend()}>
         {isFriend ? (
-          <AiOutlineUserDelete className="dark:text-white" />
+          <IconButton>
+            <AiOutlineUserDelete className="dark:text-white" />
+          </IconButton>
         ) : (
-          <AiOutlineUserAdd className="dark:text-white" />
+          <IconButton>
+            <AiOutlineUserAdd className="dark:text-white" />
+          </IconButton>
         )}
       </button>
     </div>

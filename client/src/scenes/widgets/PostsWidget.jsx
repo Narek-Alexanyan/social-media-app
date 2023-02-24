@@ -33,8 +33,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           },
         }
       );
-
-      dispatch(setPosts({ posts: result.data }));
+      const sortedPosts = result.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      dispatch(setPosts({ posts: sortedPosts }));
     } catch (error) {
       console.log(error);
     }

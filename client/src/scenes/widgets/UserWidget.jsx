@@ -11,6 +11,7 @@ import {
   HiPencil,
 } from "react-icons/hi";
 import { AiFillLinkedin, AiOutlineTwitter } from "react-icons/ai";
+import IconButton from "../../UI/buttons/IconButton";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
@@ -66,7 +67,9 @@ const UserWidget = ({ userId, picturePath }) => {
             </p>
           </div>
         </div>
-        <HiOutlineUser className="dark:text-white ml-6 cursor-pointer" />
+        <IconButton className="ml-6">
+          <HiOutlineUser className="dark:text-white" />
+        </IconButton>
       </div>
 
       <span className="w-full h-[1px] bg-black dark:bg-slate-100 inline-block"></span>
@@ -121,7 +124,9 @@ const UserWidget = ({ userId, picturePath }) => {
               <p className="dark:text-slate-200">Social Network</p>
             </div>
           </div>
-          <HiPencil className="dark:text-white" />
+          <IconButton>
+            <HiPencil className="dark:text-white" />
+          </IconButton>
         </div>
         <div className="flex justify-between items-center">
           <div className="flex justify-between items-center">
@@ -131,7 +136,9 @@ const UserWidget = ({ userId, picturePath }) => {
               <p className="dark:text-slate-200">Network Platform</p>
             </div>
           </div>
-          <HiPencil className="dark:text-white" />
+          <IconButton>
+            <HiPencil className="dark:text-white" />
+          </IconButton>
         </div>
       </div>
     </WidgetWrapper>

@@ -7,6 +7,7 @@ import { setPost } from "../../state";
 import axios from "axios";
 import { AiFillHeart, AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { HiOutlineChat } from "react-icons/hi";
+import IconButton from "../../UI/buttons/IconButton";
 
 const PostWidget = ({
   postId,
@@ -67,7 +68,7 @@ const PostWidget = ({
           <div className="flex justify-between items-center gap-1">
             <button onClick={patchLike}>
               {isLiked ? (
-                <AiFillHeart className="text-red" />
+                <AiFillHeart className="fill-red-600" />
               ) : (
                 <AiOutlineHeart className="dark:text-white" />
               )}
@@ -77,13 +78,17 @@ const PostWidget = ({
 
           <div className="flex justify-between items-center gap-1">
             <button onClick={() => setIsComments(!isComments)}>
-              <HiOutlineChat className="dark:text-white" />
+              <IconButton>
+                <HiOutlineChat className="dark:text-white" />
+              </IconButton>
             </button>
             <p className="text-base dark:text-white">{comments.length}</p>
           </div>
         </div>
         <button>
-          <AiOutlineShareAlt className="dark:text-white" />
+          <IconButton>
+            <AiOutlineShareAlt className="dark:text-white" />
+          </IconButton>
         </button>
       </div>
       {isComments && (
@@ -91,7 +96,9 @@ const PostWidget = ({
           {comments.map((comment, i) => (
             <div key={`${name}-${i}`}>
               <span className="w-full h-[1px] bg-black dark:bg-slate-100 inline-block my-1"></span>
-              <p className="my-1 pl-4 text-base text-black dark:text-white">{comment}</p>
+              <p className="my-1 pl-4 text-base text-black dark:text-white">
+                {comment}
+              </p>
             </div>
           ))}
           <span className="w-full h-[1px] bg-black dark:bg-slate-100 inline-block my-1"></span>

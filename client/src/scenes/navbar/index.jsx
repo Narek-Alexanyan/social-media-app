@@ -10,6 +10,7 @@ import { HiChatAlt, HiMenu, HiX } from "react-icons/hi";
 import { HiBell } from "react-icons/hi";
 import { HiQuestionMarkCircle } from "react-icons/hi";
 import Dropdown from "../../UI/dropdown/Dropdown";
+import IconButton from "../../UI/buttons/IconButton";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -62,9 +63,15 @@ const Navbar = () => {
         {!isMobileScreen ? (
           <div className="flex justify-between items-center">
             <Switcher className="mx-3" />
-            <HiChatAlt className="mx-3 dark:text-white" />
-            <HiBell className="mx-3 dark:text-white" />
-            <HiQuestionMarkCircle className="mx-3 dark:text-white" />
+            <IconButton className="mx-3">
+              <HiChatAlt className="dark:text-white" />
+            </IconButton>
+            <IconButton className="mx-3">
+              <HiBell className="dark:text-white" />
+            </IconButton>
+            <IconButton className="mx-3">
+              <HiQuestionMarkCircle className="dark:text-white" />
+            </IconButton>
             <Dropdown options={options} title={fullName} />
           </div>
         ) : (
