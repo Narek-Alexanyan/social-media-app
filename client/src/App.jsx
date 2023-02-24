@@ -12,7 +12,7 @@ function App() {
   const isAuth = Boolean(useSelector((state) => state.token));
 
   return (
-    <div className="app text-2xl bg-slate-50 dark:bg-black">
+    <div className="app min-h-screen text-2xl bg-slate-50 dark:bg-black">
       <BrowserRouter>
         <Navbar />
         <Routes>

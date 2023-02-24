@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import SearchField from "../../UI/SearchField";
-import Switcher from "../../components/switcher";
+import Switcher from "../../components/Switcher";
 
 import { HiChatAlt, HiMenu, HiX } from "react-icons/hi";
 import { HiBell } from "react-icons/hi";
@@ -13,6 +13,7 @@ import Dropdown from "../../UI/dropdown/Dropdown";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -50,7 +51,12 @@ const Navbar = () => {
           >
             SocialMedia
           </h2>
-          {!isMobileScreen && <SearchField />}
+          {!isMobileScreen && (
+            <SearchField
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+          )}
         </div>
         {/* DESKTOP NAV */}
         {!isMobileScreen ? (
