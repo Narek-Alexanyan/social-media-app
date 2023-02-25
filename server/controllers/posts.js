@@ -71,3 +71,17 @@ export const likePost = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
+export const addComment = async (req, res) => {
+  try {
+    const { comment } = req.body;
+    const { id } = req.params;
+    if (! comment) return res.status(404).json({ 'err': 'Comment cannot be empty!'});
+    const post = await Post.findById(id);
+    post.comments.push(comment);
+    post.save();
+    res.status(201).json(post);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
