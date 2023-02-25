@@ -48,17 +48,13 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           <p className="text-sm dark:text-slate-100">{subtitle}</p>
         </div>
       </div>
-      <button onClick={() => patchFriend()}>
+      <IconButton onClick={() => patchFriend()}>
         {isFriend ? (
-          <IconButton>
-            <AiOutlineUserDelete className="dark:text-white" />
-          </IconButton>
+          <AiOutlineUserDelete className="dark:text-white" />
         ) : (
-          <IconButton>
-            <AiOutlineUserAdd className="dark:text-white" />
-          </IconButton>
+          <AiOutlineUserAdd className="dark:text-white" />
         )}
-      </button>
+      </IconButton>
     </div>
   );
 };

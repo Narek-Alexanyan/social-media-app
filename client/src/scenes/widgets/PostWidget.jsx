@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import Friend from "../../components/Friend";
 import { useState } from "react";
@@ -24,7 +24,7 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
-  const isLiked = !!likes[loggedInUserId];
+  const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
 
   const patchLike = async () => {
@@ -77,19 +77,15 @@ const PostWidget = ({
           </div>
 
           <div className="flex justify-between items-center gap-1">
-            <button onClick={() => setIsComments(!isComments)}>
-              <IconButton>
-                <HiOutlineChat className="dark:text-white" />
-              </IconButton>
-            </button>
+            <IconButton onClick={() => setIsComments(!isComments)}>
+              <HiOutlineChat className="dark:text-white" />
+            </IconButton>
             <p className="text-base dark:text-white">{comments.length}</p>
           </div>
         </div>
-        <button>
-          <IconButton>
-            <AiOutlineShareAlt className="dark:text-white" />
-          </IconButton>
-        </button>
+        <IconButton>
+          <AiOutlineShareAlt className="dark:text-white" />
+        </IconButton>
       </div>
       {isComments && (
         <div className="mt-2">
