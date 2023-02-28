@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import UserWidget from "../widgets/UserWidget";
 import FriendListWidget from "../widgets/FriendListWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import axios from "axios";
+import { getUser } from "../../state/authSlice";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
-  const token = useSelector((state) => state.token);
   const isMobileScreen = useMediaQuery("(max-width: 768px)");
+  const dispatch = useDispatch();
 
-  const getUser = async () => {
+  const getUserData = async () => {
     try {
-      const result = await axios.get(`http://localhost:3001/users/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const result = await dispatch(getUser(userId)).unwrap();
 
-      setUser(result.data);
+      setUser(result);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getUser();
+    getUserData();
   }, []);
 
   if (!user) return <div>OOPS!</div>;

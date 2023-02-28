@@ -3,12 +3,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../state";
+import { setLogin, signUp, signIn } from "../../state/authSlice";
 import Dropzone from "react-dropzone";
 import InputField from "../../UI/fields/InputField";
 import { HiPencil } from "react-icons/hi";
 import SimpleButton from "../../UI/buttons/SimpleButton";
-import axios from "axios";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -55,15 +54,8 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
 
     try {
-      const result = await axios.post(
-        "http://localhost:3001/auth/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const result = await dispatch(signUp(formData)).unwrap();
+
       onSubmitProps.resetForm();
 
       if (result) setPageType("login");
@@ -74,19 +66,18 @@ const Form = () => {
 
   const login = async (values, onSubmitProps) => {
     try {
-      const result = await axios.post(
-        "http://localhost:3001/auth/login",
-        values
-      );
+      const result = await dispatch(signIn(values)).unwrap();
       onSubmitProps.resetForm();
 
-      if (result.data) {
+      console.log(result.user);
+      if (result) {
         dispatch(
           setLogin({
-            user: result.data.user,
-            token: result.data.token,
+            user: result.user,
+            token: result.token,
           })
         );
+        localStorage.setItem("token", result.token);
         navigate("/home");
       }
     } catch (error) {

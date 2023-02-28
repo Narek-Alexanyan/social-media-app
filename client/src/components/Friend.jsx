@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setFriends } from "../state";
+import { setFriends } from "../state/authSlice";
 import UserImage from "./UserImage";
 import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
 import IconButton from "../UI/buttons/IconButton";
@@ -9,9 +9,9 @@ import IconButton from "../UI/buttons/IconButton";
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id } = useSelector((state) => state.user);
-  const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user.friends);
+  const { _id } = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  const friends = useSelector((state) => state.auth.user.friends);
 
   const isFriend = friends.find((friend) => friend._id === friendId);
 

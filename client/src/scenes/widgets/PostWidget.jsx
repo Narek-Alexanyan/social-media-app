@@ -1,10 +1,8 @@
-import React, {useEffect} from "react";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import Friend from "../../components/Friend";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "../../state";
-import axios from "axios";
+import { patchLike } from "../../state/postSlice";
 import { AiFillHeart, AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { HiOutlineChat } from "react-icons/hi";
 import IconButton from "../../UI/buttons/IconButton";
@@ -22,30 +20,9 @@ const PostWidget = ({
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const loggedInUserId = useSelector((state) => state.auth.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
-
-  const patchLike = async () => {
-    try {
-      const result = await axios.patch(
-        `http://localhost:3001/posts/${postId}/like`,
-        {
-          userId: loggedInUserId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      dispatch(setPost({ post: result.data }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <WidgetWrapper className="mt-8">
@@ -66,7 +43,7 @@ const PostWidget = ({
       <div className="flex justify-between items-center mt-3">
         <div className="flex justify-between items-center gap-4">
           <div className="flex justify-between items-center gap-1">
-            <button onClick={patchLike}>
+            <button onClick={() => dispatch(patchLike({ userId: loggedInUserId, postId }))}>
               {isLiked ? (
                 <AiFillHeart className="fill-red-600" />
               ) : (

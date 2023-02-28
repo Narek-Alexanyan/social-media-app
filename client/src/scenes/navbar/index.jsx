@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setLogout } from "../../state";
+import { setLogout } from "../../state/authSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -17,7 +17,7 @@ const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth.user);
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
   const isMobileScreen = useMediaQuery("(max-width: 768px)");

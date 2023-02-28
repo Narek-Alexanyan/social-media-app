@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import UserImage from "../../components/UserImage";
 import {
@@ -12,28 +11,25 @@ import {
 } from "react-icons/hi";
 import { AiFillLinkedin, AiOutlineTwitter } from "react-icons/ai";
 import IconButton from "../../UI/buttons/IconButton";
+import { getUser } from "../../state/authSlice";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
 
-  const getUser = async () => {
+  const getUserData = async () => {
     try {
-      const result = await axios.get(`http://localhost:3001/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const result = await dispatch(getUser(userId)).unwrap();
 
-      setUser(result.data);
+      setUser(result);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getUser();
+    getUserData();
   }, []);
 
   if (!user) {

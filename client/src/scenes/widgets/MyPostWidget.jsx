@@ -5,7 +5,7 @@ import SearchField from "../../UI/SearchField";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../../state";
+import { sendPost } from "../../state/postSlice";
 import {
   HiOutlinePhotograph,
   HiOutlineTrash,
@@ -14,15 +14,13 @@ import {
 } from "react-icons/hi";
 import { AiOutlineGif, AiOutlineMore } from "react-icons/ai";
 import SimpleButton from "../../UI/buttons/SimpleButton";
-import axios from "axios";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
-  const { _id } = useSelector((state) => state.user);
-  const token = useSelector((state) => state.token);
+  const { _id } = useSelector((state) => state.auth.user);
   const isMobileScreen = useMediaQuery("(max-width: 768px)");
 
   const handlePost = async () => {
@@ -36,14 +34,8 @@ const MyPostWidget = ({ picturePath }) => {
     }
 
     try {
-      const result = await axios.post("http://localhost:3001/posts", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      dispatch(sendPost(formData));
 
-      dispatch(setPosts({ posts: result.data }));
       setImage(null);
       setPost("");
     } catch (error) {

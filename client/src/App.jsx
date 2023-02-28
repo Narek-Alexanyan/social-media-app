@@ -9,7 +9,7 @@ import Navbar from "./scenes/navbar";
 import { useSelector } from "react-redux";
 
 function App() {
-  const isAuth = Boolean(useSelector((state) => state.token));
+  const isAuth = Boolean(useSelector((state) => state.auth.token));
 
   return (
     <div className="app min-h-screen text-2xl bg-slate-50 dark:bg-black">

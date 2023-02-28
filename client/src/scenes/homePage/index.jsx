@@ -8,7 +8,7 @@ import FriendListWidget from "../widgets/FriendListWidget";
 
 const HomePage = () => {
   const isMobileScreen = useMediaQuery("(max-width: 768px)");
-  const { _id, picturePath } = useSelector((state) => state.user);
+  const { _id, picturePath } = useSelector((state) => state.auth.user);
 
   return (
     <div
