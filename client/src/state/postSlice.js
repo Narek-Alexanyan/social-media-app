@@ -64,9 +64,24 @@ export const patchLike = createAsyncThunk(
   async ({ userId, postId }, { rejectWithValue, dispatch }) => {
     try {
       const result = await api.patch(
-        `http://localhost:3001/posts/${postId}/like`, { userId });
+        `posts/${postId}/like`, { userId });
 
       dispatch(setPost({ post: result.data }));
+      return result.data
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+
+export const addComment = createAsyncThunk(
+  "post/addComment",
+  async ({ postId, comment }, { rejectWithValue, dispatch }) => {
+    try {
+      const result = await api.patch(`posts/${postId}/comment`, { comment })
+
+      dispatch(setPost({ post: result.data }));
+      
       return result.data
     } catch (error) {
       return rejectWithValue(error.response.data)

@@ -2,10 +2,16 @@ import WidgetWrapper from "../../components/WidgetWrapper";
 import Friend from "../../components/Friend";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { patchLike } from "../../state/postSlice";
-import { AiFillHeart, AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { patchLike, addComment } from "../../state/postSlice";
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineSend,
+  AiOutlineShareAlt,
+} from "react-icons/ai";
 import { HiOutlineChat } from "react-icons/hi";
 import IconButton from "../../UI/buttons/IconButton";
+import SearchField from "../../UI/SearchField";
 
 const PostWidget = ({
   postId,
@@ -19,6 +25,7 @@ const PostWidget = ({
   comments,
 }) => {
   const [isComments, setIsComments] = useState(false);
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const loggedInUserId = useSelector((state) => state.auth.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
@@ -43,7 +50,11 @@ const PostWidget = ({
       <div className="flex justify-between items-center mt-3">
         <div className="flex justify-between items-center gap-4">
           <div className="flex justify-between items-center gap-1">
-            <button onClick={() => dispatch(patchLike({ userId: loggedInUserId, postId }))}>
+            <button
+              onClick={() =>
+                dispatch(patchLike({ userId: loggedInUserId, postId }))
+              }
+            >
               {isLiked ? (
                 <AiFillHeart className="fill-red-600" />
               ) : (
@@ -75,6 +86,23 @@ const PostWidget = ({
             </div>
           ))}
           <span className="w-full h-[1px] bg-black dark:bg-slate-100 inline-block my-1"></span>
+          <div className="flex justify-between items-center mt-1">
+            <SearchField
+              className="w-full py-3 rounded-2xl mr-1"
+              placeholder="your comment..."
+              icon={false}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <IconButton
+              onClick={() => {
+                dispatch(addComment({ postId, comment }));
+                setComment("");
+              }}
+            >
+              <AiOutlineSend className="dark:text-white" />
+            </IconButton>
+          </div>
         </div>
       )}
     </WidgetWrapper>
